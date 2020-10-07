@@ -1,0 +1,26 @@
+verbose: false
+go:
+  # Whenever the Go version is updated here, .travis.yml and
+  # .circle/config.yml should also be updated.
+  version: 1.15
+  cgo: false
+repository:
+  path: github.com/ghostiam/lvm_exporter
+build:
+  binaries:
+    - name: lvm_exporter
+  prefix: .
+  flags: -a -tags netgo
+  ldflags: |
+    -X {{repoPath}}/vendor/github.com/prometheus/common/version.Version={{.Version}}
+    -X {{repoPath}}/vendor/github.com/prometheus/common/version.Revision={{.Revision}}
+    -X {{repoPath}}/vendor/github.com/prometheus/common/version.Branch={{.Branch}}
+    -X {{repoPath}}/vendor/github.com/prometheus/common/version.BuildUser={{user}}@{{host}}
+    -X {{repoPath}}/vendor/github.com/prometheus/common/version.BuildDate={{date "20060102-15:04:05"}}
+tarball:
+  files:
+    - LICENSE
+crossbuild:
+  platforms:
+    - linux/amd64
+    - linux/386

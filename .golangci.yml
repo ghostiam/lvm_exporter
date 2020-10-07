@@ -1,0 +1,50 @@
+run:
+  tests: true
+
+output:
+  print-issued-lines: true
+
+linters:
+  enable:
+    - bodyclose
+    - exhaustive
+    - exportloopref
+    - goconst
+    - gocritic
+    - goerr113
+    - goimports
+    - golint
+    - gosimple
+    - govet
+    - nakedret
+    - rowserrcheck
+    - staticcheck
+    - unconvert
+    - whitespace
+
+issues:
+  exclude-rules:
+    - path: _test.go
+      linters:
+        - errcheck
+
+linters-settings:
+  govet:
+    enable-all: true
+
+  errcheck:
+    exclude: scripts/errcheck_excludes.txt
+
+  whitespace:
+    multi-if: false   # Enforces newlines (or comments) after every multi-line if statement
+    multi-func: false # Enforces newlines (or comments) after every multi-line function signature
+
+  exhaustive:
+  # indicates that switch statements are to be considered exhaustive if a
+  # 'default' case is present, even if all enum members aren't listed in the
+  # switch
+  # default-signifies-exhaustive: false
+
+  nakedret:
+    # make an issue if func has more lines of code than this setting and it has naked returns; default is 30
+    max-func-lines: 1

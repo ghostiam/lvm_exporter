@@ -30,10 +30,6 @@ func main() {
 			"web.disable-exporter-metrics",
 			"Exclude metrics about the exporter itself (promhttp_*, process_*, go_*).",
 		).Bool()
-		configFile = kingpin.Flag(
-			"config.filename",
-			"LVM Exporter configuration file name.",
-		).Envar("CONFIG").Default("").String()
 	)
 
 	promlogConfig := &promlog.Config{}
@@ -56,7 +52,6 @@ func main() {
 	}
 	registry.MustRegister(version.NewCollector("lvm_exporter"))
 
-	_ = configFile // TODO
 	exporter, err := collector.New(nil, logger)
 	if err != nil {
 		level.Error(logger).Log("msg", "Error starting HTTP server:", "err", err)

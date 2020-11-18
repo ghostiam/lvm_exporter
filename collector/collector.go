@@ -32,28 +32,28 @@ func New(cfg *Config, logger log.Logger) (*Collector, error) {
 func (c *Collector) Describe(ch chan<- *prometheus.Desc) {}
 
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
-	err := execToMetrics("lvs", ch)
+	err := execToMetrics("lvs", "all", ch)
 	if err != nil {
 		level.Error(c.logger).Log("err", err)
 	}
 
-	err = execToMetrics("vgs", ch)
+	err = execToMetrics("vgs", "all", ch)
 	if err != nil {
 		level.Error(c.logger).Log("err", err)
 	}
 
-	err = execToMetrics("pvs", ch)
+	err = execToMetrics("pvs", "all,vg_all", ch)
 	if err != nil {
 		level.Error(c.logger).Log("err", err)
 	}
 }
 
-func execToMetrics(exe string, ch chan<- prometheus.Metric) error {
+func execToMetrics(exe, opts string, ch chan<- prometheus.Metric) error {
 	cmd := exec.Command(exe,
 		"--reportformat",
 		"json",
 		"-o",
-		"all",
+		opts,
 		"--units",
 		"B",
 		"--binary",

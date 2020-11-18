@@ -29,6 +29,10 @@ build: $(PROMU)
 	@echo ">> building binaries"
 	$(PROMU) build --prefix $(PREFIX)
 
+build-linux: $(PROMU)
+	@echo ">> building binaries"
+	GOOS=linux GOARCH=amd64 $(PROMU) build --prefix $(PREFIX)
+
 crossbuild: $(PROMU)
 	@echo ">> crossbuilding binaries"
 	$(PROMU) crossbuild -v

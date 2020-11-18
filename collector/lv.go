@@ -22,7 +22,7 @@ var (
 	}
 	lvmEnumsCustom = map[string][]string{
 		"raid_sync_action":     {"idle", "frozen", "resync", "recover", "check", "repair"},
-		"lv_health_status":     {"", "partial"},
+		"lv_health_status":     {"", "partial", "refresh needed", "mismatches exist"},
 		"vg_allocation_policy": {"normal", "contiguous", "cling", "anywhere", "inherited"},
 	}
 )
